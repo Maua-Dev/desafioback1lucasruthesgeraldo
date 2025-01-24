@@ -2,6 +2,7 @@ from aws_cdk import (
     # Duration,
     Stack,
     # aws_sqs as sqs,
+    aws_iam
 )
 from constructs import Construct
 from aws_cdk.aws_apigateway import RestApi, Cors
@@ -16,8 +17,8 @@ class TemplateStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         self.rest_api = RestApi(self, "ChallengeTemplateLucasRuthesGeraldo_RestApi",
-                                    rest_api_name="ChallengeTemplate_RestApi",
-                                    description="This is the ChallengeTemplate RestApi",
+                                    rest_api_name="desafioback1lucasruthesgeraldo_RestApi",
+                                    description="This is the desafioback1lucasruthesgeraldo RestApi",
                                     default_cors_preflight_options=
                                     {
                                         "allow_origins": Cors.ALL_ORIGINS,
@@ -34,7 +35,7 @@ class TemplateStack(Stack):
         }
                                                                )
 
-        self.dynamo_table = TemplateDynamoTable(self, "ChallengeTemplateLucasRuthesGeraldoDynamoTable")
+        self.dynamo_table = TemplateDynamoTable(self, "desafioback1lucasruthesgeraldo")
 
         ENVIRONMENT_VARIABLES = {
             "STAGE": "DEV",
@@ -42,6 +43,11 @@ class TemplateStack(Stack):
             "DYNAMO_PARTITION_KEY": "PK",
             "DYNAMO_SORT_KEY": "SK",
             "REGION": self.region,
+            "REPLY_TO_EMAIL":"mateus.c.martins@outlook.com",
+            "FROM_EMAIL": "lucascrapino@gmail.com",
+            "HIDDEN_COPY": "dev@maua.br",
+            "S3_BUCKET_NAME_MEMBER": self.bucket_stack.s3_bucket_member.bucket_name,
+            "S3_BUCKET_NAME_PROJECT": self.bucket_stack.s3_bucket_project.bucket_name,
         }
 
 
@@ -49,6 +55,28 @@ class TemplateStack(Stack):
         self.lambda_stack = LambdaStack(self, api_gateway_resource=api_gateway_resource,
                                         environment_variables=ENVIRONMENT_VARIABLES)
 
+        ses_admin_policy = aws_iam.PolicyStatement(
+            effect=aws_iam.Effect.ALLOW,
+            actions=[
+                "ses:*",
+            ],
+            resources=[
+                "*"
+            ]
+        )
 
-
+        s3_admin_policy = aws_iam.PolicyStatement(
+            effect=aws_iam.Effect.ALLOW,
+            actions=[
+                "s3:*",
+            ],
+            resources=[
+                "*"
+            ]
+        )
         
+        for f in self.lambda_stack.functions_that_need_ses_permissions:
+            f.add_to_role_policy(ses_admin_policy)
+
+        for f in self.lambda_stack.functions_that_need_s3_permissions:
+            f.add_to_role_policy(s3_admin_policy)
