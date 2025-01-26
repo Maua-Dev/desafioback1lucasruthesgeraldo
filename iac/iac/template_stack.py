@@ -45,9 +45,7 @@ class TemplateStack(Stack):
             "REGION": self.region,
             "REPLY_TO_EMAIL":"mateus.c.martins@outlook.com",
             "FROM_EMAIL": "lucascrapino@gmail.com",
-            "HIDDEN_COPY": "dev@maua.br",
-            "S3_BUCKET_NAME_MEMBER": self.bucket_stack.s3_bucket_member.bucket_name,
-            "S3_BUCKET_NAME_PROJECT": self.bucket_stack.s3_bucket_project.bucket_name,
+            "HIDDEN_COPY": "dev@maua.br"
         }
 
 
