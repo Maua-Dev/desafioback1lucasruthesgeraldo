@@ -1,6 +1,6 @@
 import base64
 import boto3
-from src.modules.challenge_template.app import compose_cartoon_email
+from src.shared.helpers.functions.compose_cartoon_email import compose_cartoon_email
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
@@ -23,6 +23,7 @@ def lambda_handler(event, context):
                 Destination={
                     'ToAddresses': [
                         "mateus.c.martins@outlook.com",
+                        "22.00667-2@maua.br"
                     ],
                     'BccAddresses':
                         [
