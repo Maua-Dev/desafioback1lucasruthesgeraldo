@@ -1,8 +1,7 @@
 import base64
 import boto3
 from src.shared.helpers.functions.compose_cartoon_email import compose_cartoon_email
-from src.shared.environments import Environments
-from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
+from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpResponse
 
 
 def lambda_handler(event, context):
@@ -45,4 +44,4 @@ def lambda_handler(event, context):
                 Source="devmaua@gmail.com",
             )
      
-    return LambdaHttpResponse(statusCode=200, body=response)
+    return LambdaHttpResponse(status_code=200, body=response)
