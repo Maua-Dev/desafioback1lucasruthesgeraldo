@@ -8,7 +8,10 @@ def lambda_handler(event, context):
     
     s3 = boto3.client('s3', 'sa-east-1')
 
-    img = s3.get_object('challenge-storage-devcommunitymaua', Key='kick buttowski.png')
+    s3_bucket_name = 'challenge-storage-devcommunitymaua'
+    s3_object_key = 'kick buttowski.png'
+    
+    img = s3.get_object(Bucket = s3_bucket_name, Key = s3_object_key)
     
     img_read = img['Body'].read() 
     
@@ -41,7 +44,7 @@ def lambda_handler(event, context):
                         'Data': "Charles - Envio de desenho",
                     },
                 },
-                Source="devmaua@gmail.com",
+                Source="contato@devmaua.com",
             )
      
     return LambdaHttpResponse(status_code=200, body=response)
