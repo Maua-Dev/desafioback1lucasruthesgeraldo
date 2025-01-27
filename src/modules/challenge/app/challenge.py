@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     
     img_read = img['Body'].read() 
     
-    img_64 = base64.b64encode(img_read).decode('utf-8')
+    img_64 = str(base64.b64encode(img_read))[2:-1]
 
     charles_cartoon_composed_email_html = compose_cartoon_email(img_64)
 
