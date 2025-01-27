@@ -6,9 +6,9 @@ from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHt
 
 def lambda_handler(event, context):
     
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3', 'sa-east-1')
 
-    img = s3.get_object('challenge-storage-devcommunitymaua ', Key='kick buttowski.png')
+    img = s3.get_object('challenge-storage-devcommunitymaua', Key='kick buttowski.png')
     
     img_read = img['Body'].read() 
     
