@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     message = MIMEMultipart()
     message.attach(mime_base)
 
-    charles_cartoon_composed_email_html = compose_cartoon_email(message)
+    charles_cartoon_composed_email_html = compose_cartoon_email(message.as_string())
 
     client_ses = boto3.client('ses', 'sa-east-1')
 
