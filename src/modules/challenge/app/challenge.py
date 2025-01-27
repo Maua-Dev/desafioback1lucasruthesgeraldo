@@ -1,4 +1,6 @@
 import base64
+from email import encoders, message
+from email.mime.base import MIMEBase
 import boto3
 from src.shared.helpers.functions.compose_cartoon_email import compose_cartoon_email
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpResponse
@@ -15,9 +17,13 @@ def lambda_handler(event, context):
     
     img_read = img['Body'].read() 
     
-    img_64 = str(base64.b64encode(img_read))[2:-1]
+    mime_base = MIMEBase('image', 'png')
+    mime_base.set_payload(img_read)
+    encoders.encode_base64(mime_base)
+    mime_base.add_header('Content-Disposition', f'attachment; filename="{s3_object_key}"')
+    message.attach(mime_base)
 
-    charles_cartoon_composed_email_html = compose_cartoon_email(img_64)
+    charles_cartoon_composed_email_html = compose_cartoon_email(message)
 
     client_ses = boto3.client('ses', 'sa-east-1')
 
