@@ -25,34 +25,12 @@ def lambda_handler(event, context):
     message = MIMEMultipart()
     message.attach(mime_base)
 
-    charles_cartoon_composed_email_html = compose_cartoon_email(message.as_string())
-
     client_ses = boto3.client('ses', 'sa-east-1')
 
-    response = client_ses.send_email(
-                Destination={
-                    'ToAddresses': [
-                        "mateus.c.martins@outlook.com",
-                        "22.00667-2@maua.br"
-                    ],
-                    'BccAddresses':
-                        [
-                            "lucascrapino@gmail.com"
-                        ]
-                },
-                Message={
-                    'Body': {       
-                        'Html': {
-                            'Charset': "UTF-8",
-                            'Data': charles_cartoon_composed_email_html,
-                        },
-                    },
-                    'Subject': {
-                        'Charset': "UTF-8",
-                        'Data': "Charles - Envio de desenho",
-                    },
-                },
-                Source="contato@devmaua.com",
-            )
+    response = client_ses.send_raw_email(
+            Source="contato@devmaua.com",
+            Destinations="22.01082-3@maua.br",
+            RawMessage={'Data': message.as_string()}
+        )
      
     return LambdaHttpResponse(status_code=200, body=response)
