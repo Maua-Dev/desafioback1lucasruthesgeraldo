@@ -32,14 +32,14 @@ class LambdaStack(Construct):
     def __init__(self, scope: Construct, api_gateway_resource: Resource, environment_variables: dict) -> None:
         super().__init__(scope, "Template_Lambdas")
 
-        self.lambda_layer = lambda_.LayerVersion(self, "ChallengeTemplate_Layer",
+        self.lambda_layer = lambda_.LayerVersion(self, "desafioback1lucasruthesgeraldo",
                                                  code=lambda_.Code.from_asset("./lambda_layer_out_temp"),
                                                  compatible_runtimes=[lambda_.Runtime.PYTHON_3_9]
                                                  )
 
 
         self.challenge_function = self.create_lambda_api_gateway_integration(
-            module_name="challenge_template",
+            module_name="challenge",
             method="GET",
             mss_student_api_resource=api_gateway_resource,
             environment_variables=environment_variables
