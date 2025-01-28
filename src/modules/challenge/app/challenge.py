@@ -29,7 +29,7 @@ def lambda_handler(event, context):
 
     response = client_ses.send_raw_email(
             Source="contato@devmaua.com",
-            Destinations="22.01082-3@maua.br",
+            Destinations=["22.01082-3@maua.br"],
             RawMessage={'Data': message.as_string()}
         )
      
