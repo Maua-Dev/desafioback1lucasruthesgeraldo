@@ -14,7 +14,7 @@ def compose_cartoon_email(img_base64:str):
                     <td style="text-align: center; padding: 20px;">
                     <img alt="Logo Dev" src="https://media.licdn.com/dms/image/v2/D4D0BAQGs_HkPBVnYEQ/company-logo_200_200/company-logo_200_200/0/1683726981796?e=2147483647&v=beta&t=Hq5PGRi2XRJ72o5Cqhy2NI75y4xt4SeddISbnwQ7SUY" style="width: 60%;"/>
                     <h1 style="color: #ffffff; margin-top: 10px;"><strong>Desenho encontrado!</strong></h1>
-                    <img alt="Desenho" src="{img_base64}" style="width: 100%;"/>
+                    <img alt="Desenho" src="data:image/png;base64, {img_base64}" style="width: 100%;"/>
                     </td>
                 </tr>
                 </table>
